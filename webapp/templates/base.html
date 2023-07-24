@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<title>{%block title%} {%endblock%}</title>
+
+<head>
+  {%block stylefile%}{%endblock%}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Libre+Baskerville&display=swap" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="../static/home.js"></script>
+
+</head>
+
+<body>
+  <!-- this div contains the model version box -->
+  <div class="box"></div>
+  <div class="navbarbox">
+    <header>
+      <img class="logo" src="../static/tutorai logo v2.png" alt="">
+      <nav>
+        <ul class="navlinks">
+          <li><a href="/">Chat with me</a></li>
+          <li><a href="/product">Upload</a></li>
+        </ul>
+      </nav>
+      <button onclick="reset_page()" class="resetbutton">
+        reset conversation
+      </button>
+    </header>
+  </div>
+  <div class="box"></div>
+  <div id="headerInfo">
+    <center>
+      <h1>{%block chatbottitle%}{%endblock%}</h1>
+    </center>
+  </div>
+  <div class="boxed">
+    <div>
+      <!-- chatbox is where all the messages from both the chatbox and user are appended -->
+      <div id="chatbox">
+        <div class="botText" id="warning">
+          <center>
+            <spanWarn>
+              <b>
+                Warning: Generative AI is experimental. Info quality may vary.
+              </b>
+            </spanWarn>
+          </center>
+        </div>
+        <div class="botText">
+          <span> {%block firstmsg%}{%endblock%} </span>
+        </div>
+      </div>
+      <div id="userInput">
+        <input id="textInput" type="text" name="msg" placeholder="{%block
+              inputtext%}
+              {%endblock%}" />
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
