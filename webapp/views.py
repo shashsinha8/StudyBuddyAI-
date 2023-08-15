@@ -56,7 +56,12 @@ def process_user_message(message):
         chain_type_kwargs={"prompt": QA_CHAIN_PROMPT},
     )
     result = qa_chain({"query": message})
-    print(f'{result["source_documents"][0]}\n')
+    # print(f'{result["source_documents"][0]}\n')
+
+    for i in result["source_documents"]:
+        print(i)
+        print()
+        print()
     # implementing chat history
     memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
     retriever = vectordb.as_retriever()

@@ -13,7 +13,6 @@
 </head>
 
 <body>
-  <!-- this div contains the model version box -->
   <div class="box"></div>
   <div class="navbarbox">
     <header>
@@ -21,7 +20,6 @@
       <nav>
         <ul class="navlinks">
           <li><a href="/">Chat with me</a></li>
-          <li><a href="/product">Upload</a></li>
         </ul>
       </nav>
       <button onclick="reset_page()" class="resetbutton">
@@ -30,32 +28,47 @@
     </header>
   </div>
   <div class="box"></div>
-  <div id="headerInfo">
-    <center>
-      <h1>{%block chatbottitle%}{%endblock%}</h1>
-    </center>
-  </div>
-  <div class="boxed">
-    <div>
-      <!-- chatbox is where all the messages from both the chatbox and user are appended -->
-      <div id="chatbox">
-        <div class="botText" id="warning">
-          <center>
-            <spanWarn>
-              <b>
-                Warning: Generative AI is experimental. Info quality may vary.
-              </b>
-            </spanWarn>
-          </center>
-        </div>
-        <div class="botText">
-          <span> {%block firstmsg%}{%endblock%} </span>
-        </div>
+
+  <button id="toggle-sidebar">Toggle Sidebar</button>
+  <div class="content-wrapper">
+    <!-- Sidebar content -->
+    <div class="sidebar">
+      <h2>Your documents</h2>
+
+      <input type="file" id="pdfUploader" multiple>
+      <br>
+      <button id="processBtn">Process</button>
+    </div>
+
+    <div class="main-content">
+      <div id="headerInfo">
+        <center>
+          <h1>{%block chatbottitle%}{%endblock%}</h1>
+        </center>
       </div>
-      <div id="userInput">
-        <input id="textInput" type="text" name="msg" placeholder="{%block
+      <div class="boxed">
+        <div>
+          <!-- chatbox is where all the messages from both the chatbox and user are appended -->
+          <div id="chatbox">
+            <div class="botText" id="warning">
+              <center>
+                <spanWarn>
+                  <b>
+                    Warning: Generative AI is experimental. Info quality may vary.
+                  </b>
+                </spanWarn>
+              </center>
+            </div>
+            <div class="botText">
+              <span> {%block firstmsg%}{%endblock%} </span>
+            </div>
+          </div>
+          <div id="userInput">
+            <input id="textInput" type="text" name="msg" placeholder="{%block
               inputtext%}
               {%endblock%}" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
