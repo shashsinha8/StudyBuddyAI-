@@ -1,5 +1,26 @@
 body {
-  font-family: 'Open Sans', sans-serif
+  font-family: 'Open Sans', sans-serif;
+  margin: 0px;
+
+  padding-top: 125px;
+  /* Assuming your navbar's height is 60px, adjust if needed */
+
+}
+
+code {
+  font-size: 120%;
+  color: black;
+  background-color: white;
+  border-radius: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+pre {
+  background-color: white;
+  border-radius: 5px;
 }
 
 .content-wrapper {
@@ -8,7 +29,7 @@ body {
 }
 
 .sidebar {
-  /* flex: 0 0 15%; */
+
   width: 300px;
   padding: 20px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, .2);
@@ -19,7 +40,35 @@ body {
   overflow: hidden;
   flex-shrink: 0;
   white-space: nowrap;
-  /* This will prevent the text from wrapping */
+}
+
+#loadingGif {
+  padding-top: 20px;
+  width: 5%;
+}
+
+#open-sidebar {
+  position: fixed;
+  top: 0;
+  /* start from the top */
+  height: 100vh;
+  /* extend to the full viewport height */
+  left: 0;
+  width: 20px;
+  background-color: #f7f7f7;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, .2);
+  z-index: 1000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.sidebar,
+#open-sidebar {
+  top: 110px;
+  /* This value should match the navbar's height */
 }
 
 
@@ -27,6 +76,32 @@ body {
   width: 0;
   padding: 0;
 }
+
+#toggle-sidebar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+}
+
+.navlinks {
+  padding-inline-start: 0px;
+}
+
+ul {
+  padding-inline-start: 0px;
+}
+
+/* Add this style to hide the open-sidebar button when the sidebar is visible */
+.sidebar:not(.collapsed)+#open-sidebar {
+  display: none;
+}
+
+/* Add this style to show the open-sidebar button when the sidebar is collapsed */
+.sidebar.collapsed+#open-sidebar {
+  display: block;
+}
+
 
 .main-content {
   flex: 1;
@@ -51,7 +126,7 @@ body {
 .sidebar button {
   width: 100%;
   padding: 10px;
-  background-color: #0f3f89;
+  background-color: #296bce;
   color: #fff;
   cursor: pointer;
   border: none;
@@ -66,28 +141,39 @@ body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  background-color: #0f3f89
+  background-color: #4556ff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* Make sure it spans the entire width of the viewport */
+  z-index: 1001;
+  /* Ensure it's on top of other elements */
+
 }
 
 a,
-button,
-li {
+button {
   font-size: 130%;
   font-weight: 500;
   color: #fff;
   text-decoration: none
 }
 
+body>div.navbarbox>header>nav>ul>li {
+  font-size: 130%;
+}
+
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 10%
+  padding: 20px 5%
 }
 
 .logo {
   cursor: pointer;
-  max-width: 150px
+  max-width: 250px
 }
 
 .navlinks {
@@ -109,7 +195,7 @@ header {
 
 button {
   padding: 10px;
-  background-color: #7ad9ff;
+  background-color: #0f3f89;
   color: #fff;
   cursor: pointer;
   border: none;
@@ -118,7 +204,7 @@ button {
 }
 
 button:hover {
-  background-color: #000;
+  background-color: #296bce;
   color: #fff
 }
 
@@ -198,7 +284,7 @@ h5 {
 }
 
 .botText>span {
-  background-color: #0c5a9e;
+  background-color: #296bce;
   border-radius: 10px;
   color: #fff;
   padding: 10px;
@@ -210,7 +296,7 @@ h5 {
   justify-content: flex-start;
   color: #000;
   font-family: 'Open Sans', sans-serif;
-  font-size: 1.6em;
+  font-size: 1.3em;
   text-align: left;
   line-height: 1.6em;
   margin-top: 10px;
@@ -261,7 +347,7 @@ h6 {
   color: black;
   font-family: 'Open Sans', sans-serif;
 
-  font-size: 1.6em;
+  font-size: 1.3em;
   text-align: left;
   line-height: 1.6em;
   margin-top: 10px;

@@ -13,13 +13,12 @@
 </head>
 
 <body>
-  <div class="box"></div>
   <div class="navbarbox">
     <header>
-      <img class="logo" src="../static/tutorai logo v2.png" alt="">
+      <img class="logo" src="../static/studybuddy darker blue.png" alt="">
       <nav>
         <ul class="navlinks">
-          <li><a href="/">Chat with me</a></li>
+          <li><a href="/">Welcome</a></li>
         </ul>
       </nav>
       <button onclick="reset_page()" class="resetbutton">
@@ -27,12 +26,12 @@
       </button>
     </header>
   </div>
-  <div class="box"></div>
-
-  <button id="toggle-sidebar">Toggle Sidebar</button>
   <div class="content-wrapper">
     <!-- Sidebar content -->
+    <div id="open-sidebar">></div>
+
     <div class="sidebar">
+      <button id="toggle-sidebar">x</button>
       <h2>Your documents</h2>
 
       <input type="file" id="pdfUploader" multiple>
@@ -63,6 +62,9 @@
               <span> {%block firstmsg%}{%endblock%} </span>
             </div>
           </div>
+          <center>
+            <img src="../static/loading.gif" id="loadingGif" style="display: none;">
+          </center>
           <div id="userInput">
             <input id="textInput" type="text" name="msg" placeholder="{%block
               inputtext%}

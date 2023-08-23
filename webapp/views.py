@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, request, jsonify
-from dotenv import load_dotenv, dotenv_values, find_dotenv
+from flask import Blueprint, render_template, request, jsonify, current_app
+from dotenv import load_dotenv
 from langchain.vectorstores import Chroma
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.chains import RetrievalQA
@@ -7,6 +7,8 @@ from langchain.chat_models import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
+from werkzeug.utils import secure_filename
+
 import openai
 import os
 
@@ -14,6 +16,23 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 views = Blueprint("views", __name__)
+
+ALLOWED_EXTENSIONS = {"pdf", "txt", "png", "jpg", "jpeg", "gif"}
+absolute_path = os.path.dirname(__file__)
+relative_path = "webapp/documents"
+UPLOAD_FOLDER = os.path.join(absolute_path, relative_path)
+
+
+def clear_directory(directory_path):
+    for filename in os.listdir(directory_path):
+        file_path = os.path.join(directory_path, filename)
+        if os.path.isfile(file_path):
+            os.remove(file_path)
+            # print(file_path)
+
+
+def allowed_file(filename):
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @views.route("/")
@@ -28,9 +47,37 @@ def chatbot():
     print(f"Received message: {user_message}")
 
     bot_response = process_user_message(user_message)
+    bot_response = escape_html(bot_response)
+
     print(f"Sending response: {bot_response}")
 
     return jsonify({"message": bot_response})
+
+
+@views.route("/upload", methods=["POST"])
+def upload_file():
+    # clear directory
+    clear_directory(current_app.config["UPLOAD_FOLDER"])
+
+    if "files[]" not in request.files:
+        return jsonify(error="No files part"), 400
+
+    files = request.files.getlist("files[]")
+
+    filenames = []
+    for file in files:
+        if file.filename == "":
+            return jsonify(error="No selected file"), 400
+
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(current_app.config["UPLOAD_FOLDER"], filename))
+
+            filenames.append(filename)
+        else:
+            return jsonify(error=f"Invalid file type for {file.filename}"), 400
+
+    return jsonify(success=True, filenames=filenames)
 
 
 def process_user_message(message):
@@ -68,3 +115,7 @@ def process_user_message(message):
     qa = ConversationalRetrievalChain.from_llm(llm, retriever=retriever, memory=memory)
     result = qa({"question": message})
     return result["answer"]
+
+
+def escape_html(text):
+    return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
